@@ -106,6 +106,14 @@ function Dashboard({ onStop }) {
         window.print();
     }
 
+    function openTelegram() {
+        window.open(
+            "https://t.me/ScamBreakerSecurityBot",
+            "_blank",
+            "noopener,noreferrer"
+        );
+    }
+
     return (
         <div className="dashboard">
 
@@ -148,11 +156,9 @@ function Dashboard({ onStop }) {
 
                 <section className="dashboard-card">
                     <h3>Identity Verification</h3>
-
                     <p>
                         <strong>Claimed Identity:</strong> {data.claim}
                     </p>
-
                     <p>
                         <strong>Verified:</strong>{" "}
                         {data.proof ? "Yes" : "No"}
@@ -221,6 +227,36 @@ function Dashboard({ onStop }) {
                     </section>
                 )}
 
+                {/* Telegram Alerts */}
+                <section className="telegram-card">
+                    <div className="telegram-heading">
+                        <span className="telegram-icon">✈️</span>
+                        <div>
+                            <h3>Telegram Scam Alerts</h3>
+                            <p>Get scam warnings through Telegram.</p>
+                        </div>
+                    </div>
+
+                    <div className="telegram-status">
+                        <span className="status-indicator"></span>
+                        Bot available — backend connection pending
+                    </div>
+
+                    <button
+                        className="telegram-button"
+                        onClick={openTelegram}
+                    >
+                        Open ScamBreaker Bot ↗
+                    </button>
+
+                    <p className="telegram-note">
+                        Open the bot and press Start to activate your
+                        Telegram conversation. Automatic scam alerts
+                        will work after backend integration.
+                    </p>
+                </section>
+
+                {/* Action Buttons */}
                 <div className="action-buttons">
 
                     <button
