@@ -157,6 +157,78 @@
     line-height: 1.6;
 }
 
+/* Telegram Alerts */
+
+.telegram-card {
+    background: #142b45;
+    border: 1px solid #2588c9;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.telegram-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.telegram-icon {
+    font-size: 35px;
+    background: #1d527a;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.telegram-heading h3 {
+    margin: 0 0 7px;
+    color: #ffffff;
+}
+
+.telegram-heading p {
+    margin: 0;
+    color: #b8cce0;
+}
+
+.telegram-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 20px 0;
+    color: #ffd27a;
+    font-size: 13px;
+}
+
+.status-indicator {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ffbd45;
+}
+
+.telegram-button {
+    width: 100%;
+    padding: 13px;
+    background: #249bd6;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.telegram-button:hover {
+    background: #1683bc;
+}
+
+.telegram-note {
+    color: #b8cce0;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
 /* Download and Stop buttons */
 
 .action-buttons {
@@ -214,7 +286,8 @@
 
     .scenario-selector,
     .dashboard-card,
-    .risk-card {
+    .risk-card,
+    .telegram-card {
         padding: 16px;
     }
 
