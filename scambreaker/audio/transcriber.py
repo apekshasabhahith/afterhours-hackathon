@@ -1,12 +1,13 @@
 from faster_whisper import WhisperModel
 import json
 
-def transcribe_audio(audio_path):
+
+def transcribe_audio(audio_path, language=None):
 
     print("\nLoading Faster-Whisper model...")
 
     model = WhisperModel(
-        "base",
+        "small",
         device="cpu",
         compute_type="int8"
     )
@@ -16,8 +17,12 @@ def transcribe_audio(audio_path):
 
     segments, info = model.transcribe(
         audio_path,
-        beam_size=5
+        beam_size=5,
+        language="mr",
+        task="translate"
     )
+
+    print("Detected language:", info.language)
 
     transcript = []
 
@@ -36,7 +41,7 @@ def transcribe_audio(audio_path):
         print(f"[{segment.start:.2f}s] {text}")
 
     with open("transcript.json", "w", encoding="utf-8") as file:
-        json.dump(transcript, file, indent=4)
+        json.dump(transcript, file, indent=4, ensure_ascii=False)
 
     print("\nTranscription completed!")
     print("Saved as transcript.json")
@@ -45,5 +50,4 @@ def transcribe_audio(audio_path):
 
 
 if __name__ == "__main__":
-
-    transcribe_audio("test_audio.wav")
+    transcribe_audio("test_audio.wav", language=None)

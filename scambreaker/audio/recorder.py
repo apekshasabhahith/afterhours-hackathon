@@ -2,7 +2,7 @@ import sounddevice as sd
 import soundfile as sf
 
 # Audio settings
-DURATION = 30
+DURATION = 10
 SAMPLE_RATE = 16000
 CHANNELS = 1
 
