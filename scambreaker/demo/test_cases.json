@@ -1,0 +1,70 @@
+
+{
+  "project": "ScamBreaker",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "TC01",
+      "name": "Digital Arrest Scam",
+      "category": "scam",
+      "language": "English",
+      "text": "I am calling from CBI. Your Aadhaar card is linked to a criminal case. Do not disconnect this call. You must transfer money immediately to avoid arrest."
+    },
+    {
+      "id": "TC02",
+      "name": "Bank OTP Fraud",
+      "category": "scam",
+      "language": "English",
+      "text": "I am calling from your bank. Your account will be blocked today. Tell me the OTP you just received so I can verify your account immediately."
+    },
+    {
+      "id": "TC03",
+      "name": "Courier Scam",
+      "category": "scam",
+      "language": "English",
+      "text": "Your parcel contains illegal items. Police will arrest you. Stay on the call and pay the verification fee immediately."
+    },
+    {
+      "id": "TC04",
+      "name": "Fake Job Offer",
+      "category": "scam",
+      "language": "English",
+      "text": "Congratulations, you have been selected for a high-paying job. Pay the registration fee today to confirm your position. Do not miss this opportunity."
+    },
+    {
+      "id": "TC05",
+      "name": "Investment Fraud",
+      "category": "scam",
+      "language": "English",
+      "text": "Invest now and double your money within seven days. This offer expires today. Transfer the amount to my personal account immediately."
+    },
+    {
+      "id": "TC06",
+      "name": "Police Impersonation - Hinglish",
+      "category": "scam",
+      "language": "Hinglish",
+      "text": "Hello, main police department se bol raha hoon. Aapke naam par arrest warrant hai. Kisi ko phone mat karna. Case close karne ke liye abhi paise transfer karo."
+    },
+    {
+      "id": "TC07",
+      "name": "Normal Bank Information",
+      "category": "normal",
+      "language": "English",
+      "text": "Hello, this is your bank calling to inform you about our updated branch timings. You can visit our official website for more information."
+    },
+    {
+      "id": "TC08",
+      "name": "Friends Discussing a Scam",
+      "category": "normal",
+      "language": "English",
+      "text": "My friend received a fake CBI call yesterday. The caller demanded money. I told him not to share his OTP and to report the incident."
+    },
+    {
+      "id": "TC09",
+      "name": "Ambiguous Police Verification",
+      "category": "ambiguous",
+      "language": "English",
+      "text": "Hello, I am calling regarding your police verification. Please visit the local police station with your documents."
+    }
+  ]
+}
