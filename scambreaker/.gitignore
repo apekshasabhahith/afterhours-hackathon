@@ -1,6 +1,13 @@
-__pycache__/
+pycache/
 *.py[cod]
+*.pyc
+
 .env
 .venv/
+**/.venv/
 venv/
+
 .streamlit/secrets.toml
+
+audio/*.wav
+audio/transcript.json
