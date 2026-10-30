@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-# Correct imports when running from the project root
+# Detection and memory modules
 from detect.rules import detect_rules
 from detect.memory import ConversationMemory
+from detect.groq_client import analyze_with_groq
 
 
 app = FastAPI(
@@ -13,7 +14,10 @@ app = FastAPI(
 )
 
 
+# ---------------------------------------------------------
 # Conversation memory
+# ---------------------------------------------------------
+
 memory = ConversationMemory()
 
 
@@ -54,14 +58,22 @@ def analyze(request: AnalyzeRequest):
     lower_text = text.lower()
 
     # -----------------------------------------------------
-    # Analyze the current message
+    # Analyze current message using rule-based detection
     # -----------------------------------------------------
 
     message_score, message_reasons = detect_rules(text)
 
+    # -----------------------------------------------------
+    # Analyze current message using Groq
+    #
+    # Groq is optional. If unavailable, the rule-based
+    # detector continues working normally.
+    # -----------------------------------------------------
+
+    groq_analysis = analyze_with_groq(text)
 
     # -----------------------------------------------------
-    # Determine the stage indicated by this message
+    # Determine stage for current message
     #
     # Stage 1 = Hook
     # Stage 2 = Fake Authority
@@ -84,7 +96,6 @@ def analyze(request: AnalyzeRequest):
     else:
         current_stage = 0
 
-
     # -----------------------------------------------------
     # Update cumulative conversation memory
     # -----------------------------------------------------
@@ -101,7 +112,6 @@ def analyze(request: AnalyzeRequest):
     reasons = call["reasons"]
     stage = call["stage"]
 
-
     # -----------------------------------------------------
     # Determine Risk Level
     # -----------------------------------------------------
@@ -115,39 +125,43 @@ def analyze(request: AnalyzeRequest):
     else:
         level = "green"
 
-
     # -----------------------------------------------------
-    # Identify the caller's claimed identity
+    # Identify caller's claimed identity
     #
-    # This is only a claim, not verified identity.
+    # IMPORTANT:
+    # ConversationMemory stores messages as strings.
+    # Therefore we search the complete conversation text.
     # -----------------------------------------------------
 
     claim = "Unknown"
     scam_type = "unknown"
 
+    conversation_text = " ".join(
+        message.lower()
+        for message in call["messages"]
+    )
 
-    if "cbi" in lower_text:
+    if "cbi" in conversation_text:
         claim = "CBI officer"
         scam_type = "cbi"
 
-    elif "police" in lower_text:
+    elif "police" in conversation_text:
         claim = "Police officer"
         scam_type = "police"
 
-    elif "rbi" in lower_text:
+    elif "rbi" in conversation_text:
         claim = "RBI representative"
         scam_type = "bank"
 
     elif (
-        "calling from your bank" in lower_text
-        or "bank official" in lower_text
+        "calling from your bank" in conversation_text
+        or "bank official" in conversation_text
     ):
         claim = "Bank representative"
         scam_type = "bank"
 
-
     # -----------------------------------------------------
-    # Explain the verification limitation
+    # Verification limitation
     #
     # False means supporting proof was not detected.
     # It does NOT mean the identity was verified as false.
@@ -155,19 +169,8 @@ def analyze(request: AnalyzeRequest):
 
     proof = False
 
-
     # -----------------------------------------------------
-    # Predict the scammer's likely next move
-    #
-    # Prediction is based on the manipulation techniques
-    # detected in the conversation.
-    # -----------------------------------------------------
-
-       # -----------------------------------------------------
-    # Predict the scammer's likely next move
-    #
-    # Prediction is based on the manipulation techniques
-    # detected in the conversation.
+    # Predict scammer's likely next move
     # -----------------------------------------------------
 
     if any("Financial" in reason for reason in reasons):
@@ -215,13 +218,14 @@ def analyze(request: AnalyzeRequest):
             "No strong scam indicators detected so far. "
             "Continue to stay cautious."
         )
+
     # -----------------------------------------------------
     # API Response
     # -----------------------------------------------------
 
     return {
 
-        # Eight core fields for the frontend
+        # Eight core fields
         "level": level,
         "score": cumulative_score,
         "scam_type": scam_type,
@@ -231,7 +235,10 @@ def analyze(request: AnalyzeRequest):
         "reasons": reasons,
         "next_move": next_move,
 
-        # Additional testing metadata
+        # Optional Groq explanation
+        "ai_analysis": groq_analysis,
+
+        # Testing / integration metadata
         "call_id": request.call_id,
         "message_score": message_score,
         "messages_analyzed": len(call["messages"])

@@ -21,7 +21,7 @@
                 "Isolation or secrecy detected",
                 "Financial exploitation detected"
             ],
-            "next_move": "Stop sharing information or transferring money. End the interaction and independently contact the official organization.",
+            "next_move": "The caller may next demand money, an OTP, UPI PIN, bank password, or another payment-related action. Do not transfer money or share financial credentials.",
             "call_id": "automated_test_1",
             "message_score": 95,
             "messages_analyzed": 1
@@ -38,18 +38,19 @@
             "text": "I am calling from your bank. Your account will be blocked today. Tell me the OTP you just received so I can verify your account immediately."
         },
         "response": {
-            "level": "green",
-            "score": 20,
+            "level": "yellow",
+            "score": 50,
             "scam_type": "bank",
-            "stage": 2,
+            "stage": 4,
             "claim": "Bank representative",
             "proof": false,
             "reasons": [
-                "Threat or intimidation detected"
+                "Threat or intimidation detected",
+                "Financial exploitation detected"
             ],
-            "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
+            "next_move": "The caller may next demand money, an OTP, UPI PIN, bank password, or another payment-related action. Do not transfer money or share financial credentials.",
             "call_id": "automated_test_2",
-            "message_score": 20,
+            "message_score": 50,
             "messages_analyzed": 1
         },
         "http_status": 200
@@ -65,20 +66,19 @@
         },
         "response": {
             "level": "red",
-            "score": 95,
+            "score": 75,
             "scam_type": "police",
             "stage": 4,
             "claim": "Police officer",
             "proof": false,
             "reasons": [
-                "Authority impersonation detected",
                 "Threat or intimidation detected",
                 "Isolation or secrecy detected",
                 "Financial exploitation detected"
             ],
-            "next_move": "Stop sharing information or transferring money. End the interaction and independently contact the official organization.",
+            "next_move": "The caller may next demand money, an OTP, UPI PIN, bank password, or another payment-related action. Do not transfer money or share financial credentials.",
             "call_id": "automated_test_3",
-            "message_score": 95,
+            "message_score": 75,
             "messages_analyzed": 1
         },
         "http_status": 200
@@ -102,7 +102,7 @@
             "reasons": [
                 "Financial exploitation detected"
             ],
-            "next_move": "Be cautious. Do not share OTPs, PINs or passwords. Verify the caller independently.",
+            "next_move": "The caller may next demand money, an OTP, UPI PIN, bank password, or another payment-related action. Do not transfer money or share financial credentials.",
             "call_id": "automated_test_4",
             "message_score": 30,
             "messages_analyzed": 1
@@ -128,7 +128,7 @@
             "reasons": [
                 "Financial exploitation detected"
             ],
-            "next_move": "Be cautious. Do not share OTPs, PINs or passwords. Verify the caller independently.",
+            "next_move": "The caller may next demand money, an OTP, UPI PIN, bank password, or another payment-related action. Do not transfer money or share financial credentials.",
             "call_id": "automated_test_5",
             "message_score": 30,
             "messages_analyzed": 1
@@ -145,19 +145,21 @@
             "text": "Hello, main police department se bol raha hoon. Aapke naam par arrest warrant hai. Kisi ko phone mat karna. Case close karne ke liye abhi paise transfer karo."
         },
         "response": {
-            "level": "yellow",
-            "score": 40,
+            "level": "red",
+            "score": 95,
             "scam_type": "police",
-            "stage": 2,
+            "stage": 4,
             "claim": "Police officer",
             "proof": false,
             "reasons": [
                 "Authority impersonation detected",
-                "Threat or intimidation detected"
+                "Threat or intimidation detected",
+                "Isolation or secrecy detected",
+                "Financial exploitation detected"
             ],
-            "next_move": "Be cautious. Do not share OTPs, PINs or passwords. Verify the caller independently.",
+            "next_move": "The caller may next demand money, an OTP, UPI PIN, bank password, or another payment-related action. Do not transfer money or share financial credentials.",
             "call_id": "automated_test_6",
-            "message_score": 40,
+            "message_score": 95,
             "messages_analyzed": 1
         },
         "http_status": 200
@@ -197,17 +199,15 @@
         },
         "response": {
             "level": "green",
-            "score": 20,
+            "score": 0,
             "scam_type": "cbi",
-            "stage": 1,
+            "stage": 0,
             "claim": "CBI officer",
             "proof": false,
-            "reasons": [
-                "Authority impersonation detected"
-            ],
+            "reasons": [],
             "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
             "call_id": "automated_test_8",
-            "message_score": 20,
+            "message_score": 0,
             "messages_analyzed": 1
         },
         "http_status": 200
@@ -223,17 +223,15 @@
         },
         "response": {
             "level": "green",
-            "score": 20,
+            "score": 0,
             "scam_type": "police",
-            "stage": 1,
+            "stage": 0,
             "claim": "Police officer",
             "proof": false,
-            "reasons": [
-                "Authority impersonation detected"
-            ],
+            "reasons": [],
             "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
             "call_id": "automated_test_9",
-            "message_score": 20,
+            "message_score": 0,
             "messages_analyzed": 1
         },
         "http_status": 200
