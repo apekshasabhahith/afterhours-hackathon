@@ -32,7 +32,12 @@ ISOLATION_KEYWORDS = [
     "don't contact anyone",
     "do not contact anyone",
     "stay on the call",
-    "keep this confidential"
+    "keep this confidential",
+
+    # Hinglish
+    "kisi ko phone mat karna",
+    "kisi ko call mat karna",
+    "kisi ko mat batana"
 ]
 
 FINANCIAL_KEYWORDS = [
@@ -50,7 +55,12 @@ FINANCIAL_KEYWORDS = [
     "bank password",
     "personal account",
     "immediate payment",
-    "money transfer"
+    "money transfer",
+
+    # Hinglish
+    "paise transfer karo",
+    "paise bhejo",
+    "abhi paise transfer karo"
 ]
 
 
@@ -60,9 +70,10 @@ def detect_rules(text):
     score = 0
     reasons = []
 
-    # -----------------------------
+    # ---------------------------------------------------------
     # Authority impersonation
-    # -----------------------------
+    # ---------------------------------------------------------
+
     authority_contexts = [
         "i am calling from",
         "i am from",
@@ -79,32 +90,47 @@ def detect_rules(text):
         for context in authority_contexts
     )
 
-    if authority_detected:
+    # Hinglish authority detection
+    hinglish_authority_detected = any(
+        phrase in text
+        for phrase in [
+            "police department se bol raha hoon",
+            "police se bol raha hoon"
+        ]
+    )
+
+    if authority_detected or hinglish_authority_detected:
         score += 20
         reasons.append("Authority impersonation detected")
 
-    # -----------------------------
+    # ---------------------------------------------------------
     # Threat / intimidation
-    # -----------------------------
+    # ---------------------------------------------------------
+
     if any(keyword in text for keyword in THREAT_KEYWORDS):
         score += 20
         reasons.append("Threat or intimidation detected")
 
-    # -----------------------------
+    # ---------------------------------------------------------
     # Isolation / secrecy
-    # -----------------------------
+    # ---------------------------------------------------------
+
     if any(keyword in text for keyword in ISOLATION_KEYWORDS):
         score += 25
         reasons.append("Isolation or secrecy detected")
 
-    # -----------------------------
+    # ---------------------------------------------------------
     # Financial exploitation
-    # -----------------------------
+    # ---------------------------------------------------------
+
     if any(keyword in text for keyword in FINANCIAL_KEYWORDS):
         score += 30
         reasons.append("Financial exploitation detected")
 
-    # Maximum score = 100
+    # ---------------------------------------------------------
+    # Keep score between 0 and 100
+    # ---------------------------------------------------------
+
     score = min(score, 100)
 
     return score, reasons
