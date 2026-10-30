@@ -47,17 +47,23 @@ def analyze(request: AnalyzeRequest):
     message_score, message_reasons = detect_rules(text)
 
     # Determine the stage indicated by this message
+    #
+    # Stage 1 = Hook
+    # Stage 2 = Fake Authority
+    # Stage 3 = Threat / Isolation
+    # Stage 4 = Financial Exploitation
+
     if any("Financial" in reason for reason in message_reasons):
         current_stage = 4
 
-    elif any("Isolation" in reason for reason in message_reasons):
+    elif (
+        any("Threat" in reason for reason in message_reasons)
+        or any("Isolation" in reason for reason in message_reasons)
+    ):
         current_stage = 3
 
-    elif any("Threat" in reason for reason in message_reasons):
-        current_stage = 2
-
     elif any("Authority" in reason for reason in message_reasons):
-        current_stage = 1
+        current_stage = 2
 
     else:
         current_stage = 0
