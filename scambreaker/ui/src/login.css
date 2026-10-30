@@ -1,0 +1,172 @@
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #080d1c, #101d3b);
+    padding: 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: #131f39;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #34496b;
+    box-shadow: 0 0 30px rgba(0, 145, 255, 0.15);
+    box-sizing: border-box;
+}
+
+.auth-logo {
+    text-align: center;
+    font-size: 40px;
+}
+
+.auth-card h1 {
+    text-align: center;
+    color: #55baff;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #aab8d0;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+.auth-tabs {
+    display: flex;
+    background: #0b1428;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.auth-tabs button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.auth-tabs button.active {
+    background: #1688e8;
+}
+
+.auth-card h2 {
+    margin-bottom: 20px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 15px;
+    border: 1px solid #34496b;
+    border-radius: 8px;
+    background: #0b1428;
+    color: white;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.auth-card input:focus {
+    border-color: #39aaff;
+}
+
+/* Password field */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    width: 100%;
+    padding: 13px 65px 13px 13px;
+}
+
+/* SHOW / HIDE button */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    color: #55baff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 20;
+    user-select: none;
+}
+
+.password-toggle:hover {
+    color: white;
+}
+
+.password-rules {
+    background: #0b1428;
+    padding: 14px;
+    border-radius: 9px;
+    margin-bottom: 16px;
+    font-size: 12px;
+}
+
+.password-rules strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.password-rules .valid {
+    color: #22c55e;
+    margin: 7px 0;
+}
+
+.password-rules .invalid {
+    color: #ff5555;
+    margin: 7px 0;
+}
+
+.match-success,
+.auth-success {
+    color: #22c55e;
+    font-size: 13px;
+}
+
+.match-error,
+.auth-error {
+    color: #ff5555;
+    font-size: 13px;
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(90deg, #087ee8, #20b5ff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-submit:hover {
+    opacity: 0.85;
+}
+
+.auth-footer {
+    text-align: center;
+    color: #8494ad;
+    font-size: 11px;
+    margin-top: 25px;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 22px;
+    }
+}

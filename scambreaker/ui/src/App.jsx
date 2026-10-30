@@ -1,174 +1,131 @@
 import React, { useState } from "react";
-import "./App.css";
+import Login from "./Login";
 import Dashboard from "./Dashboard";
+import "./App.css";
 
 function App() {
-  const [screen, setScreen] = useState("welcome");
+  const [screen, setScreen] = useState("auth");
   const [consent, setConsent] = useState(false);
 
-  // Dashboard navigation
+  // 1. Registration and Login
+  if (screen === "auth") {
+    return <Login onSuccess={() => setScreen("welcome")} />;
+  }
+
+  // 2. Monitoring Dashboard
   if (screen === "monitoring") {
-    return (
-      <Dashboard
-        onStop={() => setScreen("setup")}
-      />
-    );
+    return <Dashboard onStop={() => setScreen("setup")} />;
   }
 
   return (
-    <div className="app">
+    <div className="app-container">
 
-      <nav className="navbar">
-        <div className="logo">🛡️ ScamBreaker</div>
-
-        <div className="status">
-          <span className="status-dot"></span>
-          {screen === "welcome"
-            ? "Protection System"
-            : screen === "privacy"
-              ? "Privacy First"
-              : "Protection Setup"}
-        </div>
-      </nav>
-
-      {/* WELCOME SCREEN */}
-
+      {/* 3. Welcome Page */}
       {screen === "welcome" && (
-        <main className="welcome">
+        <div className="page-card">
+
+          <div className="logo">🛡️</div>
 
           <div className="badge">
-            CYBERSECURITY INTELLIGENCE
+            AI-POWERED SCAM PROTECTION
           </div>
 
-          <h1>
-            Don't let scams
-            <br />
-            <span>control your decisions.</span>
-          </h1>
+          <h1>ScamBreaker</h1>
 
-          <p className="subtitle">
-            Real-time scam conversation analysis.
-            <br />
-            Understand manipulation before it's too late.
+          <h2>
+            Stay One Step Ahead of Scammers
+          </h2>
+
+          <p>
+            ScamBreaker helps identify suspicious conversations,
+            detect manipulation techniques, and provide
+            real-time safety guidance.
           </p>
 
-          <div className="welcome-buttons">
-            <button
-              className="start-button"
-              onClick={() => setScreen("privacy")}
-            >
-              Start Protection →
-            </button>
-          </div>
+          <button
+            className="primary-btn"
+            onClick={() => setScreen("privacy")}
+          >
+            Start Protection →
+          </button>
 
           <div className="features">
 
             <div className="feature-card">
-              <span className="feature-icon">🔍</span>
-              <h3>Scam Detection</h3>
+              <h3>🔍 Scam Detection</h3>
               <p>
-                Identify suspicious conversations
-                and impersonation attempts.
+                Identify suspicious conversation patterns
+                and possible scam attempts.
               </p>
             </div>
 
             <div className="feature-card">
-              <span className="feature-icon">📊</span>
-              <h3>Risk Intelligence</h3>
+              <h3>📊 Risk Intelligence</h3>
               <p>
-                Understand manipulation stages
-                and suspicious behaviour.
+                Understand risk levels and potential
+                manipulation techniques.
               </p>
             </div>
 
             <div className="feature-card">
-              <span className="feature-icon">🛡️</span>
-              <h3>Stay Protected</h3>
+              <h3>🛡️ Stay Protected</h3>
               <p>
-                Receive warnings and guidance
-                before taking risky actions.
+                Receive safety recommendations when
+                suspicious activity is detected.
               </p>
             </div>
 
           </div>
-        </main>
+
+        </div>
       )}
 
-      {/* PRIVACY SCREEN */}
-
+      {/* 4. Privacy Consent Page */}
       {screen === "privacy" && (
-        <main className="privacy-container">
+        <div className="page-card">
 
-          <div className="privacy-icon">🔐</div>
+          <div className="logo">🔐</div>
 
-          <div className="badge">
-            YOUR PRIVACY MATTERS
-          </div>
+          <h1>Privacy & Consent</h1>
 
-          <h1 className="privacy-title">
-            Your safety.
-            <br />
-            <span>Your control.</span>
-          </h1>
-
-          <p className="privacy-description">
-            Before starting ScamBreaker, please understand
-            how your conversation data is used.
+          <p>
+            Your privacy matters. ScamBreaker requires
+            your permission before accessing your
+            laptop microphone.
           </p>
 
-          <div className="privacy-card">
+          <div className="info-box">
 
-            <div className="privacy-item">
-              <span>🎙️</span>
-              <div>
-                <h3>Microphone Access</h3>
-                <p>
-                  ScamBreaker uses your laptop microphone
-                  to capture nearby phone speakerphone audio
-                  after permission and activation.
-                </p>
-              </div>
-            </div>
+            <h3>How ScamBreaker Works</h3>
 
-            <div className="privacy-item">
-              <span>🔍</span>
-              <div>
-                <h3>Conversation Analysis</h3>
-                <p>
-                  Captured audio is used for scam analysis
-                  and identifying manipulation techniques.
-                </p>
-              </div>
-            </div>
+            <p>
+              During the demonstration, your phone call
+              can be placed on speakerphone.
+            </p>
 
-            <div className="privacy-item">
-              <span>🛑</span>
-              <div>
-                <h3>You Are In Control</h3>
-                <p>
-                  You can stop protection whenever you want.
-                  ScamBreaker does not automatically intercept
-                  cellular calls.
-                </p>
-              </div>
-            </div>
+            <p>
+              With your permission, the laptop microphone
+              can capture the audio for scam analysis
+              once microphone integration is enabled.
+            </p>
 
-            <div className="privacy-item">
-              <span>🔒</span>
-              <div>
-                <h3>Consent Required</h3>
-                <p>
-                  Monitoring starts only after you explicitly
-                  provide consent and activate protection.
-                  Obtain consent from other participants
-                  where required.
-                </p>
-              </div>
-            </div>
+            <p>
+              ScamBreaker does not directly intercept
+              cellular calls.
+            </p>
 
           </div>
 
-          <label className="consent-label">
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              marginTop: "20px",
+              marginBottom: "20px",
+              textAlign: "left",
+            }}
+          >
             <input
               type="checkbox"
               checked={consent}
@@ -176,121 +133,93 @@ function App() {
             />
 
             <span>
-              I understand and agree to the privacy
-              and microphone usage policy.
+              I understand and agree to microphone-based
+              audio analysis during the demonstration.
             </span>
           </label>
 
-          <div className="privacy-buttons">
+          <button
+            className="primary-btn"
+            disabled={!consent}
+            onClick={() => setScreen("setup")}
+            style={{
+              opacity: consent ? 1 : 0.5,
+              cursor: consent ? "pointer" : "not-allowed",
+            }}
+          >
+            Continue →
+          </button>
 
-            <button
-              className="back-button"
-              onClick={() => setScreen("welcome")}
-            >
-              ← Back
-            </button>
+          <button
+            className="secondary-btn"
+            onClick={() => setScreen("welcome")}
+          >
+            ← Back
+          </button>
 
-            <button
-              className="start-button"
-              disabled={!consent}
-              onClick={() => setScreen("setup")}
-            >
-              Continue →
-            </button>
-
-          </div>
-
-        </main>
+        </div>
       )}
 
-      {/* PROTECTION SETUP SCREEN */}
-
+      {/* 5. Protection Setup Page */}
       {screen === "setup" && (
-        <main className="privacy-container">
+        <div className="page-card">
 
-          <div className="privacy-icon">🎙️</div>
+          <div className="logo">🎙️</div>
 
-          <div className="badge">
-            ALMOST READY
-          </div>
+          <h1>Protection Setup</h1>
 
-          <h1 className="privacy-title">
-            Set up your
-            <br />
-            <span>protection.</span>
-          </h1>
+          <h2>Get Ready for Scam Detection</h2>
 
-          <p className="privacy-description">
-            Complete these steps before starting
-            ScamBreaker monitoring.
-          </p>
+          <div className="info-box">
 
-          <div className="privacy-card">
+            <h3>Step 1: Enable Speakerphone</h3>
 
-            <div className="privacy-item">
-              <span>📱</span>
-              <div>
-                <h3>Step 1: Prepare your phone</h3>
-                <p>
-                  Place your phone nearby and enable
-                  speakerphone during the conversation.
-                </p>
-              </div>
-            </div>
+            <p>
+              Place your phone on speaker mode so
+              the laptop microphone can hear the
+              conversation.
+            </p>
 
-            <div className="privacy-item">
-              <span>💻</span>
-              <div>
-                <h3>Step 2: Prepare your laptop</h3>
-                <p>
-                  Keep your laptop microphone enabled
-                  and positioned near your phone.
-                </p>
-              </div>
-            </div>
+            <h3>Step 2: Position Your Phone</h3>
 
-            <div className="privacy-item">
-              <span>🔐</span>
-              <div>
-                <h3>Step 3: Allow microphone access</h3>
-                <p>
-                  ScamBreaker will request microphone
-                  permission when monitoring starts.
-                </p>
-              </div>
-            </div>
+            <p>
+              Keep your phone near the laptop in a
+              quiet environment for clearer audio.
+            </p>
+
+            <h3>Step 3: Start Monitoring</h3>
+
+            <p>
+              Open the monitoring dashboard to view
+              scam-risk information and safety guidance.
+            </p>
+
+            <p>
+              Note: This button opens the dashboard.
+              It does not automatically activate
+              microphone capture.
+            </p>
 
           </div>
 
-          <div className="privacy-buttons">
+          <button
+            className="primary-btn"
+            onClick={() => setScreen("monitoring")}
+          >
+            🛡️ Open Monitoring Dashboard
+          </button>
 
-            <button
-              className="back-button"
-              onClick={() => setScreen("privacy")}
-            >
-              ← Back
-            </button>
+          <button
+            className="secondary-btn"
+            onClick={() => setScreen("privacy")}
+          >
+            ← Back
+          </button>
 
-            <button
-              className="start-button"
-              onClick={() => setScreen("monitoring")}
-            >
-              Start Monitoring →
-            </button>
-
-          </div>
-
-        </main>
-      )}
-
-      {screen === "welcome" && (
-        <footer>
-          ScamBreaker © 2026 | Your Digital Safety Companion
-        </footer>
+        </div>
       )}
 
     </div>
-
   );
 }
 
