@@ -1,0 +1,241 @@
+[
+    {
+        "test_number": 1,
+        "input": {
+            "id": "TC01",
+            "name": "Digital Arrest Scam",
+            "category": "scam",
+            "language": "English",
+            "text": "I am calling from CBI. Your Aadhaar card is linked to a criminal case. Do not disconnect this call. You must transfer money immediately to avoid arrest."
+        },
+        "response": {
+            "level": "red",
+            "score": 95,
+            "scam_type": "cbi",
+            "stage": 4,
+            "claim": "CBI officer",
+            "proof": false,
+            "reasons": [
+                "Authority impersonation detected",
+                "Threat or intimidation detected",
+                "Isolation or secrecy detected",
+                "Financial exploitation detected"
+            ],
+            "next_move": "Stop sharing information or transferring money. End the interaction and independently contact the official organization.",
+            "call_id": "automated_test_1",
+            "message_score": 95,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 2,
+        "input": {
+            "id": "TC02",
+            "name": "Bank OTP Fraud",
+            "category": "scam",
+            "language": "English",
+            "text": "I am calling from your bank. Your account will be blocked today. Tell me the OTP you just received so I can verify your account immediately."
+        },
+        "response": {
+            "level": "green",
+            "score": 20,
+            "scam_type": "bank",
+            "stage": 2,
+            "claim": "Bank representative",
+            "proof": false,
+            "reasons": [
+                "Threat or intimidation detected"
+            ],
+            "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
+            "call_id": "automated_test_2",
+            "message_score": 20,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 3,
+        "input": {
+            "id": "TC03",
+            "name": "Courier Scam",
+            "category": "scam",
+            "language": "English",
+            "text": "Your parcel contains illegal items. Police will arrest you. Stay on the call and pay the verification fee immediately."
+        },
+        "response": {
+            "level": "red",
+            "score": 95,
+            "scam_type": "police",
+            "stage": 4,
+            "claim": "Police officer",
+            "proof": false,
+            "reasons": [
+                "Authority impersonation detected",
+                "Threat or intimidation detected",
+                "Isolation or secrecy detected",
+                "Financial exploitation detected"
+            ],
+            "next_move": "Stop sharing information or transferring money. End the interaction and independently contact the official organization.",
+            "call_id": "automated_test_3",
+            "message_score": 95,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 4,
+        "input": {
+            "id": "TC04",
+            "name": "Fake Job Offer",
+            "category": "scam",
+            "language": "English",
+            "text": "Congratulations, you have been selected for a high-paying job. Pay the registration fee today to confirm your position. Do not miss this opportunity."
+        },
+        "response": {
+            "level": "yellow",
+            "score": 30,
+            "scam_type": "unknown",
+            "stage": 4,
+            "claim": "Unknown",
+            "proof": false,
+            "reasons": [
+                "Financial exploitation detected"
+            ],
+            "next_move": "Be cautious. Do not share OTPs, PINs or passwords. Verify the caller independently.",
+            "call_id": "automated_test_4",
+            "message_score": 30,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 5,
+        "input": {
+            "id": "TC05",
+            "name": "Investment Fraud",
+            "category": "scam",
+            "language": "English",
+            "text": "Invest now and double your money within seven days. This offer expires today. Transfer the amount to my personal account immediately."
+        },
+        "response": {
+            "level": "yellow",
+            "score": 30,
+            "scam_type": "unknown",
+            "stage": 4,
+            "claim": "Unknown",
+            "proof": false,
+            "reasons": [
+                "Financial exploitation detected"
+            ],
+            "next_move": "Be cautious. Do not share OTPs, PINs or passwords. Verify the caller independently.",
+            "call_id": "automated_test_5",
+            "message_score": 30,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 6,
+        "input": {
+            "id": "TC06",
+            "name": "Police Impersonation - Hinglish",
+            "category": "scam",
+            "language": "Hinglish",
+            "text": "Hello, main police department se bol raha hoon. Aapke naam par arrest warrant hai. Kisi ko phone mat karna. Case close karne ke liye abhi paise transfer karo."
+        },
+        "response": {
+            "level": "yellow",
+            "score": 40,
+            "scam_type": "police",
+            "stage": 2,
+            "claim": "Police officer",
+            "proof": false,
+            "reasons": [
+                "Authority impersonation detected",
+                "Threat or intimidation detected"
+            ],
+            "next_move": "Be cautious. Do not share OTPs, PINs or passwords. Verify the caller independently.",
+            "call_id": "automated_test_6",
+            "message_score": 40,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 7,
+        "input": {
+            "id": "TC07",
+            "name": "Normal Bank Information",
+            "category": "normal",
+            "language": "English",
+            "text": "Hello, this is your bank calling to inform you about our updated branch timings. You can visit our official website for more information."
+        },
+        "response": {
+            "level": "green",
+            "score": 0,
+            "scam_type": "unknown",
+            "stage": 0,
+            "claim": "Unknown",
+            "proof": false,
+            "reasons": [],
+            "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
+            "call_id": "automated_test_7",
+            "message_score": 0,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 8,
+        "input": {
+            "id": "TC08",
+            "name": "Friends Discussing a Scam",
+            "category": "normal",
+            "language": "English",
+            "text": "My friend received a fake CBI call yesterday. The caller demanded money. I told him not to share his OTP and to report the incident."
+        },
+        "response": {
+            "level": "green",
+            "score": 20,
+            "scam_type": "cbi",
+            "stage": 1,
+            "claim": "CBI officer",
+            "proof": false,
+            "reasons": [
+                "Authority impersonation detected"
+            ],
+            "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
+            "call_id": "automated_test_8",
+            "message_score": 20,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    },
+    {
+        "test_number": 9,
+        "input": {
+            "id": "TC09",
+            "name": "Ambiguous Police Verification",
+            "category": "ambiguous",
+            "language": "English",
+            "text": "Hello, I am calling regarding your police verification. Please visit the local police station with your documents."
+        },
+        "response": {
+            "level": "green",
+            "score": 20,
+            "scam_type": "police",
+            "stage": 1,
+            "claim": "Police officer",
+            "proof": false,
+            "reasons": [
+                "Authority impersonation detected"
+            ],
+            "next_move": "No strong scam indicators detected so far. Continue to stay cautious.",
+            "call_id": "automated_test_9",
+            "message_score": 20,
+            "messages_analyzed": 1
+        },
+        "http_status": 200
+    }
+]

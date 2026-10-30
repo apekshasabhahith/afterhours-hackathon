@@ -1,11 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from rules import detect_rules
-from memory import ConversationMemory
 
-# ==========================================
-# 1. INITIALIZE APPLICATION
-# ==========================================
+# Correct imports when running from the project root
+from detect.rules import detect_rules
+from detect.memory import ConversationMemory
+
 
 app = FastAPI(
     title="ScamBreaker Detection API",
@@ -13,14 +12,11 @@ app = FastAPI(
     version="1.0"
 )
 
-# Initialize conversation memory
+# Conversation memory
 memory = ConversationMemory()
 
 
-# ==========================================
-# 2. REQUEST MODEL
-# ==========================================
-
+# Request models
 class AnalyzeRequest(BaseModel):
     text: str
     ts: float
@@ -31,10 +27,7 @@ class ResetRequest(BaseModel):
     call_id: str
 
 
-# ==========================================
-# 3. HEALTH CHECK
-# ==========================================
-
+# Health check
 @app.get("/health")
 def health():
     return {
@@ -43,58 +36,47 @@ def health():
     }
 
 
-# ==========================================
-# 4. SCAM ANALYSIS
-# ==========================================
-
+# Main scam analysis endpoint
 @app.post("/analyze")
 def analyze(request: AnalyzeRequest):
 
     text = request.text.strip()
     lower_text = text.lower()
 
-    # Run detection rules
-    score, reasons = detect_rules(text)
+    # Analyze the current message
+    message_score, message_reasons = detect_rules(text)
 
-    # ======================================
-    # MANIPULATION STAGE CLASSIFICATION
-    # ======================================
+    # Determine the stage indicated by this message
+    if any("Financial" in reason for reason in message_reasons):
+        current_stage = 4
 
-    if any("Financial" in r for r in reasons):
-        stage = 4
+    elif any("Isolation" in reason for reason in message_reasons):
+        current_stage = 3
 
-    elif any("Isolation" in r for r in reasons):
-        stage = 3
+    elif any("Threat" in reason for reason in message_reasons):
+        current_stage = 2
 
-    elif any("Threat" in r for r in reasons):
-        stage = 2
-
-    elif any("Authority" in r for r in reasons):
-        stage = 1
+    elif any("Authority" in reason for reason in message_reasons):
+        current_stage = 1
 
     else:
-        stage = 0
+        current_stage = 0
 
-    # ======================================
-    # UPDATE CONVERSATION MEMORY
-    # ======================================
-
+    # Update cumulative conversation memory
     call = memory.update(
         request.call_id,
         text,
-        score,
-        reasons,
-        stage
+        message_score,
+        message_reasons,
+        current_stage
     )
 
-    # Use cumulative conversation score
     cumulative_score = call["score"]
+    reasons = call["reasons"]
+    stage = call["stage"]
 
-    # ======================================
-    # RISK CLASSIFICATION
-    # ======================================
-
-    if cumulative_score >= 65:
+    # Determine risk level
+    if cumulative_score > 65:
         level = "red"
 
     elif cumulative_score >= 30:
@@ -103,10 +85,8 @@ def analyze(request: AnalyzeRequest):
     else:
         level = "green"
 
-    # ======================================
-    # CALLER IDENTITY CLASSIFICATION
-    # ======================================
-
+    # Identify the caller's claimed identity.
+    # This is only a claim, not verified identity.
     claim = "Unknown"
     scam_type = "unknown"
 
@@ -129,73 +109,59 @@ def analyze(request: AnalyzeRequest):
         claim = "Bank representative"
         scam_type = "bank"
 
-    # ======================================
-    # NEXT-MOVE PREDICTION
-    # ======================================
+    # Explain the verification limitation
+    proof = False
 
-    if call["stage"] == 4:
+    # Suggest a safe next action
+    if level == "red":
         next_move = (
-            "May attempt further financial exploitation "
-            "or request banking credentials"
+            "Stop sharing information or transferring money. "
+            "End the interaction and independently contact the "
+            "official organization."
         )
 
-    elif call["stage"] == 3:
+    elif level == "yellow":
         next_move = (
-            "May increase pressure to keep "
-            "the conversation secret"
-        )
-
-    elif call["stage"] == 2:
-        next_move = (
-            "May escalate threats or intimidation"
-        )
-
-    elif call["stage"] == 1:
-        next_move = (
-            "May attempt to establish false authority"
+            "Be cautious. Do not share OTPs, PINs or passwords. "
+            "Verify the caller independently."
         )
 
     else:
         next_move = (
-            "No suspicious next move identified"
+            "No strong scam indicators detected so far. "
+            "Continue to stay cautious."
         )
 
-    # ======================================
-    # FINAL RESPONSE
-    # ======================================
-
+    # API response
     return {
-        "call_id": request.call_id,
+        # Eight core fields for the frontend
         "level": level,
         "score": cumulative_score,
-        "message_score": score,
         "scam_type": scam_type,
-        "stage": call["stage"],
+        "stage": stage,
         "claim": claim,
-        "proof": False,
-        "reasons": call["reasons"],
+        "proof": proof,
+        "reasons": reasons,
         "next_move": next_move,
+
+        # Additional testing metadata
+        "call_id": request.call_id,
+        "message_score": message_score,
         "messages_analyzed": len(call["messages"])
     }
 
 
-# ==========================================
-# 5. RESET CONVERSATION
-# ==========================================
-
+# Reset a conversation
 @app.post("/reset")
 def reset_conversation(request: ResetRequest):
 
     return memory.reset(request.call_id)
 
 
-# ==========================================
-# 6. ROOT ENDPOINT
-# ==========================================
-
+# Root endpoint
 @app.get("/")
 def home():
-
     return {
-        "message": "ScamBreaker P2 Detection API is running"
+        "message": "ScamBreaker Detection API is running",
+        "docs": "/docs"
     }
